@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Todo List</h2>
-    <input type="text" id="title" placeholder="Enter Title">
-    <br><br>
-    <textarea id="desc" placeholder="Enter Description"></textarea>
-    <br><br>
+    <div class="todo-card">
+        <h2>Todo List</h2>
+        <input type="text" id="title" placeholder="Enter Title">
+        <textarea id="desc" placeholder="Enter Description"></textarea>
+        <button onclick="addTask()">Save</button>
 
-    <button onclick="addTask()">Save</button>
+        <hr>
 
-    <hr>
-
-    <div id="tasks"></div>
+        <div id="tasks"></div>
+    </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
