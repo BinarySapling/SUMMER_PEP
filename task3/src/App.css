@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #000000;
+  color: #f3f4f6;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.comp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form, .old_input {
+  width: 100%;
+  max-width: 380px;
+  padding: 30px;
+  background: #111111;
+  border: 1px solid rgba(255, 165, 0, 0.2); 
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.form:hover, .old_input:hover {
+  border-color: rgba(255, 165, 0, 0.4);
+  box-shadow: 0 10px 40px rgba(255, 165, 0, 0.05);
+}
+
+.form h2, .form h4 {
+  color: #facc15; /* Yellow */
+  margin-bottom: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+  color: #ffa500; /* Orange */
+}
+
+/* Inputs and Textareas */
+.input, textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.input:focus, textarea:focus {
+  outline: none;
+  border-color: #ffa500; /* Orange focus */
+  box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.15);
+  background: #222;
+}
+
+.input::placeholder, textarea::placeholder {
+  color: #666;
+}
+
+/* Button styles */
+button {
+  width: 10%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffa500 0%, #facc15 100%); /* Orange to yellow */
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+  transition: all 0.3s ease;
+  margin: 10px 10px 10px ;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.6);
+  background: linear-gradient(135deg, #ffb732 0%, #fce04b 100%);
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(255, 165, 0, 0.4);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 20px 0;
+}
