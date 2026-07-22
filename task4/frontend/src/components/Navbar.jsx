@@ -1,51 +1,59 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import ThemeButton from './ThemeButton';
 
 const Navbar = () => {
 	const { user, setUser } = useContext(UserContext);
+	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const handleLogout = (e) => {
 		e.preventDefault();
 		setUser(null);
 		localStorage.removeItem('user');
+		setIsOpen(false);
 		navigate('/login');
 	};
 
+	const closeMenu = () => setIsOpen(false);
+
 	return (
 		<header className="navbar">
-			<NavLink to="/" className="brand">
+			<NavLink to="/" className="brand" onClick={closeMenu}>
 				<span>CourseHub</span>
 			</NavLink>
-			<div className="navbar-actions">
+
+			<div className="navbar-right">
 				<ThemeButton />
-				<nav aria-label="Primary" className="nav-links">
-					<NavLink to="/">Home</NavLink>
-					<NavLink to="/about">About</NavLink>
-					{user ? (
-						<>
-							<NavLink to="/dashboard">Dashboard</NavLink>
-							<NavLink to="/enrolled">Enrolled Courses</NavLink>
-							<span style={{
-								fontSize: '0.9rem',
-								padding: '8px 12px',
-								color: 'var(--text-light)',
-								opacity: 0.8
-							}}>
-								Hi, {user.fname}
-							</span>
-							<a href="#" onClick={handleLogout}>Logout</a>
-						</>
-					) : (
-						<>
-							<NavLink to="/login">Login</NavLink>
-							<NavLink to="/signup">Sign Up</NavLink>
-						</>
-					)}
-				</nav>
+				<button 
+					className="menu-toggle" 
+					onClick={() => setIsOpen(!isOpen)}
+					aria-label="Toggle navigation menu"
+				>
+					{isOpen ? '✕' : '☰'}
+				</button>
 			</div>
+
+			<nav className={`nav-links ${isOpen ? 'open' : ''}`}>
+				<NavLink to="/" onClick={closeMenu}>Home</NavLink>
+				<NavLink to="/about" onClick={closeMenu}>About</NavLink>
+				{user ? (
+					<>
+						<NavLink to="/dashboard" onClick={closeMenu}>Dashboard</NavLink>
+						<NavLink to="/enrolled" onClick={closeMenu}>Enrolled Courses</NavLink>
+						<span className="user-greeting">
+							Hi, {user.fname}
+						</span>
+						<a href="#" onClick={handleLogout}>Logout</a>
+					</>
+				) : (
+					<>
+						<NavLink to="/login" onClick={closeMenu}>Login</NavLink>
+						<NavLink to="/signup" onClick={closeMenu}>Sign Up</NavLink>
+					</>
+				)}
+			</nav>
 		</header>
 	);
 };

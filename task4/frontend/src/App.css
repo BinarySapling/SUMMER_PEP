@@ -30,17 +30,27 @@
   background: color-mix(in srgb, currentColor 2%, transparent);
 }
 
-.navbar-actions {
+.navbar-right {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
-.brand {
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  font-size: 1.05rem;
+.menu-toggle {
+  display: none;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: inherit;
+}
+
+.user-greeting {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  color: var(--text-light);
+  opacity: 0.85;
 }
 
 .nav-links {
@@ -65,6 +75,38 @@
 
 .nav-links a.active {
   background-color: rgba(127, 127, 127, 0.18);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 0 4px;
+    border-top: 1px solid rgba(127, 127, 127, 0.14);
+    margin-top: 10px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a,
+  .user-greeting {
+    width: 100%;
+    padding: 10px 12px;
+  }
 }
 
 .footer {
@@ -270,6 +312,47 @@ body.dark .theme-toggle-thumb {
   justify-content: center;
 }
 
+.landing-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 16px;
+  background: rgba(127, 127, 127, 0.05);
+  border: 1px solid rgba(127, 127, 127, 0.15);
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-image {
+  flex: 0 0 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+}
+
+@media (max-width: 768px) {
+  .landing-hero {
+    flex-direction: column;
+  }
+  .hero-image {
+    flex: 1;
+    max-width: 260px;
+  }
+}
+
 .hero-actions {
   display: flex;
   align-items: center;
@@ -442,6 +525,13 @@ body.dark .auth-form input::placeholder {
   border: 1px solid rgba(127, 127, 127, 0.12);
   background: rgba(127, 127, 127, 0.03);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
 .course-media {
