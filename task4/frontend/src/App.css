@@ -284,16 +284,16 @@ body.dark .theme-toggle-thumb {
   justify-content: center;
   padding: 10px 16px;
   border-radius: 999px;
-  background: var(--primary-color);
-  color: #fff;
+  background: #2563eb;
+  color: #ffffff !important;
   text-decoration: none;
   font-weight: 600;
 }
 
 .hero-link:hover {
-  color: #fff;
+  color: #ffffff !important;
   text-decoration: none;
-  background: #2563eb;
+  background: #1d4ed8;
 }
 
 .hero-note {

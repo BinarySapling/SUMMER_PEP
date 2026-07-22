@@ -27,6 +27,7 @@ const Navbar = () => {
 					{user ? (
 						<>
 							<NavLink to="/dashboard">Dashboard</NavLink>
+							<NavLink to="/enrolled">Enrolled Courses</NavLink>
 							<span style={{
 								fontSize: '0.9rem',
 								padding: '8px 12px',

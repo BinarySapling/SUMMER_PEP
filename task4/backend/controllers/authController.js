@@ -9,11 +9,9 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: 'All fields (fname, lname, email, password, confirmPassword) are required' });
     }
 
-
     if (password !== confirmPassword) {
       return res.status(400).json({ message: 'Passwords do not match' });
     }
-
  
     const userExists = await User.findOne({ email: email.toLowerCase() });
     if (userExists) {
@@ -21,7 +19,6 @@ export const signup = async (req, res) => {
     }
 
     const user = await registerUser({ fname, lname, email, password });
-
     res.status(201).json({
       message: 'User registered successfully',
       token: generateToken(user._id),

@@ -23,11 +23,28 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Password is required'],
     },
+    courses: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    }],
   },
   {
     timestamps: true,
   }
 );
+
+userSchema.pre('remove', async function (next) {
+  try {
+    await this.model('Course').updateMany(
+      { _id: { $in: this.courses } },
+      { $pull: { students: this._id } }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 const User = mongoose.model('User', userSchema);
 export default User;

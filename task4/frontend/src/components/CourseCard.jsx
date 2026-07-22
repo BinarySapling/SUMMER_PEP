@@ -1,7 +1,58 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../context/UserContext';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, isEnrolled, onRefresh }) => {
   const { title, Instructor, Duration, level, price, image } = course
+  const { user } = useContext(UserContext);
+
+  const handleEnroll = async () => {
+    if (!user) {
+      alert("Please login to enroll.");
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:3000/api/enroll', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: user.id, courseId: course._id }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Enrolled successfully!");
+        if (onRefresh) onRefresh();
+      } else {
+        alert(data.message || "Enrollment failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred during enrollment.");
+    }
+  }
+
+  const handleUnenroll = async () => {
+    if (!user) return;
+    try {
+      const response = await fetch('http://localhost:3000/api/unenroll', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: user.id, courseId: course._id }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Unenrolled successfully!");
+        if (onRefresh) onRefresh();
+      } else {
+        alert(data.message || "Unenrollment failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred during unenrollment.");
+    }
+  }
 
   return (
     <article className="course-card">
@@ -37,7 +88,21 @@ const CourseCard = ({ course }) => {
             <span className="course-price-label">Price</span>
             <span className="course-price">${price}</span>
           </div>
-          <button className="enroll-btn">Enroll Now</button>
+
+          {isEnrolled ? (
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button className="enroll-btn" style={{ backgroundColor: '#28a745', cursor: 'default' }} disabled>
+                Enrolled
+              </button>
+              <button className="enroll-btn" style={{ backgroundColor: '#dc3545' }} onClick={handleUnenroll}>
+                Unenroll
+              </button>
+            </div>
+          ) : (
+            <button className="enroll-btn" onClick={handleEnroll}>
+              Enroll Now
+            </button>
+          )}
         </div>
       </div>
     </article>
