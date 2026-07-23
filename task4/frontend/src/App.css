@@ -353,6 +353,22 @@ body.dark .theme-toggle-thumb {
   }
 }
 
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background-color: var(--primary-color, #2563eb);
+  margin-left: 4px;
+  vertical-align: middle;
+  border-radius: 2px;
+  animation: blinkCursor 0.8s infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-actions {
   display: flex;
   align-items: center;

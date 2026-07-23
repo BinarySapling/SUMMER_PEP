@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import mongoose from 'mongoose';
 import * as coursesData from './data/courses.js';
 import authRoutes from './routes/authRoutes.js';
@@ -18,7 +19,6 @@ mongoose.connect(MONGODB_URI)
     try {
       const count = await Course.countDocuments();
       if (count === 0) {
-        // Migration: If database has no courses, load them from the courses.js file
         await Course.insertMany(courses);
         console.log('Courses successfully migrated to MongoDB!');
       }
@@ -30,6 +30,7 @@ mongoose.connect(MONGODB_URI)
     console.error('MongoDB connection error:', err.message);
   });
 
+app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(cors());
 app.use(express.json());
 

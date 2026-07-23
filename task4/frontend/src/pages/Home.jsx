@@ -7,6 +7,24 @@ const Home = () => {
 	const [myCourses, setMyCourses] = useState([]);
 	const { user } = useContext(UserContext);
 
+	// Typing effect state
+	const [typedText, setTypedText] = useState('');
+	const fullText = 'Build real web skills with practical courses';
+
+	useEffect(() => {
+		let index = 0;
+		const timer = setInterval(() => {
+			if (index <= fullText.length) {
+				setTypedText(fullText.slice(0, index));
+				index++;
+			} else {
+				clearInterval(timer);
+			}
+		}, 40);
+
+		return () => clearInterval(timer);
+	}, []);
+
 	const fetchCourses = () => {
 		fetch('http://localhost:3000/api/courses')
 			.then((response) => response.json())
@@ -33,7 +51,10 @@ const Home = () => {
 			<div className="hero-card landing-hero">
 				<div className="hero-content">
 					<p className="eyebrow">CourseHub Learning</p>
-					<h1>Build real web skills with practical courses</h1>
+					<h1>
+						{typedText}
+						<span className="typing-cursor"></span>
+					</h1>
 					<p className="section-lead">
 						Simple lessons, clear topics, and projects that help you learn faster.
 					</p>
