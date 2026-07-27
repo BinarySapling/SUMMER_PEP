@@ -1,6 +1,0 @@
-*node_modules
-*.env
-# Environment files
-.env
-.env.*
-!.env.example
