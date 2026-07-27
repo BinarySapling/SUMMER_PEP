@@ -21,36 +21,63 @@ const Navbar = () => {
 	return (
 		<header className="navbar">
 			<NavLink to="/" className="brand" onClick={closeMenu}>
-				<span>CourseHub</span>
+				<span>CoursePanda</span>
 			</NavLink>
 
 			<div className="navbar-right">
 				<ThemeButton />
-				<button 
-					className="menu-toggle" 
+				<button
+					className="menu-toggle"
 					onClick={() => setIsOpen(!isOpen)}
 					aria-label="Toggle navigation menu"
 				>
 					{isOpen ? '✕' : '☰'}
 				</button>
 			</div>
-
+			
 			<nav className={`nav-links ${isOpen ? 'open' : ''}`}>
 				<NavLink to="/" onClick={closeMenu}>Home</NavLink>
 				<NavLink to="/about" onClick={closeMenu}>About</NavLink>
+
 				{user ? (
 					<>
-						<NavLink to="/dashboard" onClick={closeMenu}>Dashboard</NavLink>
-						<NavLink to="/enrolled" onClick={closeMenu}>Enrolled Courses</NavLink>
+						<NavLink to="/dashboard" onClick={closeMenu}>
+							Dashboard
+						</NavLink>
+
+						<NavLink to="/enrolled" onClick={closeMenu}>
+							Enrolled Courses
+						</NavLink>
+
+						{user.role === "instructor" && (
+							<>
+								<NavLink to="/add-course" onClick={closeMenu}>
+									Add Course
+								</NavLink>
+
+								<NavLink to="/instructor/mycourses" onClick={closeMenu}>
+									My Courses
+								</NavLink>
+							</>
+						)}
+
 						<span className="user-greeting">
 							Hi, {user.fname}
 						</span>
-						<a href="#" onClick={handleLogout}>Logout</a>
+
+						<a href="#" onClick={handleLogout}>
+							Logout
+						</a>
 					</>
 				) : (
 					<>
-						<NavLink to="/login" onClick={closeMenu}>Login</NavLink>
-						<NavLink to="/signup" onClick={closeMenu}>Sign Up</NavLink>
+						<NavLink to="/login" onClick={closeMenu}>
+							Login
+						</NavLink>
+
+						<NavLink to="/signup" onClick={closeMenu}>
+							Sign Up
+						</NavLink>
 					</>
 				)}
 			</nav>

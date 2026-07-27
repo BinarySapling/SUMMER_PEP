@@ -6,7 +6,12 @@ const courseSchema = new mongoose.Schema({
     price: Number,
     Duration: String,
     level: String,
-    image: String
+    image: String,
+    instructorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 });
 
 const Course = mongoose.model('Course', courseSchema);

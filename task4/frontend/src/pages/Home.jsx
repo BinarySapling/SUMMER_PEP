@@ -31,8 +31,13 @@ const Home = () => {
 			.then((data) => setCourses(data))
 			.catch(() => setCourses([]));
 
+		const token = localStorage.getItem("token");
 		if (user) {
-			fetch(`http://localhost:3000/api/mycourses/${user.id}`)
+			fetch('http://localhost:3000/api/mycourses', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				}
+			})
 				.then((response) => response.json())
 				.then((data) => setMyCourses(data))
 				.catch(() => setMyCourses([]));
@@ -79,18 +84,18 @@ const Home = () => {
 				</div>
 
 				<div className="hero-image">
-					<img 
-						src="https://cdni.iconscout.com/illustration/premium/thumb/cute-little-cat-reading-book-illustration-svg-download-png-8050223.png" 
-						alt="Cute cat reading book illustration" 
+					<img
+						src="https://cdni.iconscout.com/illustration/premium/thumb/cute-little-cat-reading-book-illustration-svg-download-png-8050223.png"
+						alt="Cute cat reading book illustration"
 					/>
 				</div>
 			</div>
 
 			<div className="course-grid" id="courses">
 				{Array.isArray(courses) && courses.map((course) => (
-					<CourseCard 
-						key={course._id || course.id} 
-						course={course} 
+					<CourseCard
+						key={course._id || course.id}
+						course={course}
 						isEnrolled={myCourseIds.includes(course._id)}
 						onRefresh={fetchCourses}
 					/>

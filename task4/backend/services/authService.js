@@ -5,11 +5,11 @@ import User from '../models/userModel.js';
 const JWT_SECRET = process.env.JWT_SECRET || 'default_super_secret_key';
 
 
-export const generateToken = (id) => {
-  return jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
+export const generateToken = (id, role) => {
+  return jwt.sign({ id, role }, JWT_SECRET, { expiresIn: '30d' });
 };
 
-export const registerUser = async ({ fname, lname, email, password }) => {
+export const registerUser = async ({ fname, lname, email, password, role }) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -20,6 +20,7 @@ export const registerUser = async ({ fname, lname, email, password }) => {
     lname,
     email: email.toLowerCase(),
     password: hashedPassword,
+    role: role || 'student',
   });
 
   console.log(user)

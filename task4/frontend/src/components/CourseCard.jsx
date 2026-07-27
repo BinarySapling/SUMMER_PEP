@@ -6,53 +6,66 @@ const CourseCard = ({ course, isEnrolled, onRefresh }) => {
   const { user } = useContext(UserContext);
 
   const handleEnroll = async () => {
-    if (!user) {
-      alert("Please login to enroll.");
-      return;
-    }
-    try {
-      const response = await fetch('http://localhost:3000/api/enroll', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: user.id, courseId: course._id }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert("Enrolled successfully!");
-        if (onRefresh) onRefresh();
-      } else {
-        alert(data.message || "Enrollment failed");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred during enrollment.");
-    }
+  if (!user) {
+    alert("Please login to enroll.");
+    return;
   }
 
-  const handleUnenroll = async () => {
-    if (!user) return;
-    try {
-      const response = await fetch('http://localhost:3000/api/unenroll', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: user.id, courseId: course._id }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert("Unenrolled successfully!");
-        if (onRefresh) onRefresh();
-      } else {
-        alert(data.message || "Unenrollment failed");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred during unenrollment.");
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch("http://localhost:3000/api/enroll", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        courseId: course._id,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Enrolled successfully!");
+      if (onRefresh) onRefresh();
+    } else {
+      alert(data.message);
     }
+  } catch (error) {
+    console.error(error);
+    alert("An error occurred during enrollment.");
   }
+};
+  const handleUnenroll = async () => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch("http://localhost:3000/api/unenroll", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        courseId: course._id,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Unenrolled successfully!");
+      if (onRefresh) onRefresh();
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    alert("An error occurred during unenrollment.");
+  }
+};
 
   return (
     <article className="course-card">

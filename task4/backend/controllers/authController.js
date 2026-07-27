@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 
 export const signup = async (req, res) => {
   try {
-    const { fname, lname, email, password, confirmPassword } = req.body;
+    const { fname, lname, email, password, confirmPassword, role } = req.body;
 
     if (!fname || !lname || !email || !password || !confirmPassword) {
       return res.status(400).json({ message: 'All fields (fname, lname, email, password, confirmPassword) are required' });
@@ -18,15 +18,16 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    const user = await registerUser({ fname, lname, email, password });
+    const user = await registerUser({ fname, lname, email, password, role });
     res.status(201).json({
       message: 'User registered successfully',
-      token: generateToken(user._id),
+      token: generateToken(user._id, user.role),
       user: {
         id: user._id,
         fname: user.fname,
         lname: user.lname,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -48,12 +49,13 @@ export const login = async (req, res) => {
       const user = await loginUser(email, password);
       res.json({
         message: 'Login successful',
-        token: generateToken(user._id),
+        token: generateToken(user._id, user.role),
         user: {
           id: user._id,
           fname: user.fname,
           lname: user.lname,
           email: user.email,
+          role: user.role,
         },
       });
     } catch (err) {

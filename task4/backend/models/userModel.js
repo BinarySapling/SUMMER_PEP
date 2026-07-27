@@ -7,11 +7,13 @@ const userSchema = new mongoose.Schema(
       required: [true, 'First name is required'],
       trim: true,
     },
+
     lname: {
       type: String,
       required: [true, 'Last name is required'],
       trim: true,
     },
+
     email: {
       type: String,
       required: [true, 'Email is required'],
@@ -19,14 +21,31 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+
     password: {
       type: String,
       required: [true, 'Password is required'],
     },
-    courses: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course'
-    }],
+
+    role: {
+      type: String,
+      enum: ['student', 'instructor', 'admin'],
+      default: 'student',
+      required: true,
+    },
+
+    courses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+      },
+    ],
+    coursesAdded: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -45,6 +64,6 @@ userSchema.pre('remove', async function (next) {
   }
 });
 
-
 const User = mongoose.model('User', userSchema);
+
 export default User;

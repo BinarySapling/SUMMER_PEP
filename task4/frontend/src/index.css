@@ -49,6 +49,7 @@ body.dark a {
 }
 
 body.light input,
+body.light select,
 body.light .card-panel,
 body.light .page-card,
 body.light .course-card,
@@ -59,6 +60,7 @@ body.light .footer {
 }
 
 body.dark input,
+body.dark select,
 body.dark .card-panel,
 body.dark .page-card,
 body.dark .course-card,
@@ -68,11 +70,13 @@ body.dark .footer {
   color: var(--surface-light);
 }
 
-body.dark input {
+body.dark input,
+body.dark select {
   border-color: #444;
 }
 
-body.light input {
+body.light input,
+body.light select {
   background: var(--surface-light);
   color: var(--text-dark);
 }
@@ -141,7 +145,8 @@ button {
   font: inherit;
 }
 
-input {
+input,
+select {
   padding: 8px 12px;
   border: 0;
   background-color: transparent;

@@ -11,7 +11,8 @@ const SignUp = () => {
 		lname: '',
 		email: '',
 		password: '',
-		confirmPassword: ''
+		confirmPassword: '',
+		role: 'student'
 	});
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const SignUp = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const { fname, lname, email, password, confirmPassword } = formData;
+		const { fname, lname, email, password, confirmPassword, role } = formData;
 
 		if (!fname || !lname || !email || !password || !confirmPassword) {
 			setError('All fields are required');
@@ -47,7 +48,7 @@ const SignUp = () => {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ fname, lname, email, password, confirmPassword })
+				body: JSON.stringify({ fname, lname, email, password, confirmPassword, role })
 			});
 
 			const data = await response.json();
@@ -61,6 +62,7 @@ const SignUp = () => {
 				fname: data.user.fname,
 				lname: data.user.lname,
 				email: data.user.email,
+				role: data.user.role,
 				token: data.token
 			};
 			setUser(userData);
@@ -130,6 +132,19 @@ const SignUp = () => {
 							onChange={handleChange}
 							required
 						/>
+					</div>
+
+					<div className="auth-field">
+						<label htmlFor="signup-role">Role</label>
+						<select
+							id="signup-role"
+							name="role"
+							value={formData.role}
+							onChange={handleChange}
+						>
+							<option value="student">Student</option>
+							<option value="instructor">Instructor</option>
+						</select>
 					</div>
 
 					<div className="auth-field">

@@ -53,10 +53,13 @@ const Login = () => {
 				fname: data.user.fname,
 				lname: data.user.lname,
 				email: data.user.email,
-				token: data.token
+				role: data.user.role,
 			};
+
 			setUser(userData);
-			localStorage.setItem('user', JSON.stringify(userData));
+
+			localStorage.setItem("user", JSON.stringify(userData));
+			localStorage.setItem("token", data.token);
 
 			navigate('/dashboard');
 		} catch (err) {

@@ -7,14 +7,31 @@ const Enrolled = () => {
     const { user } = useContext(UserContext);
     const [enrolledCourses, setEnrolledCourses] = useState([]);
 
-    const fetchEnrolled = () => {
-        if (user) {
-            fetch(`http://localhost:3000/api/mycourses/${user.id}`)
-                .then(response => response.json())
-                .then(data => setEnrolledCourses(data))
-                .catch(error => console.error("Error fetching enrolled courses:", error));
-        }
-    };
+    const fetchEnrolled = async () => {
+    if (!user) return;
+
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(
+            "http://localhost:3000/api/mycourses",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(response.status);
+        console.log(data);
+
+        setEnrolledCourses(data);
+    } catch (err) {
+        console.error(err);
+    }
+};
 
     useEffect(() => {
         fetchEnrolled();
@@ -37,9 +54,9 @@ const Enrolled = () => {
             <div className="course-grid" id="courses">
                 {Array.isArray(enrolledCourses) && enrolledCourses.length > 0 ? (
                     enrolledCourses.map((course) => (
-                        <CourseCard 
-                            key={course._id || course.id} 
-                            course={course} 
+                        <CourseCard
+                            key={course._id || course.id}
+                            course={course}
                             isEnrolled={true}
                             onRefresh={fetchEnrolled}
                         />
